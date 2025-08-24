@@ -4,14 +4,13 @@ import { BellIcon, LogOutIcon, ShipWheelIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import useLogout from "../hooks/useLogout";
 
-const Navbar = () => {
+const Navbar = ({ onSidebarToggle }) => {
   const { authUser } = useAuthUser();
   const location = useLocation();
   const isChatPage = location.pathname?.startsWith("/chat");
   const { logoutMutation } = useLogout();
 
   // Sidebar toggle for mobile
-  // Accepts onSidebarToggle prop from Layout
   return (
     <nav className="bg-base-200 border-b border-base-300 sticky top-0 z-30 h-16 flex items-center">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,11 +19,7 @@ const Navbar = () => {
           <button
             className="lg:hidden btn btn-ghost btn-circle mr-2"
             aria-label="Open sidebar"
-            onClick={
-              typeof window.onSidebarToggle === "function"
-                ? window.onSidebarToggle
-                : undefined
-            }
+            onClick={onSidebarToggle}
           >
             <svg
               width="24"

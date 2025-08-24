@@ -6,12 +6,8 @@ const Layout = ({ children, showSidebar = false }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   // Expose sidebar toggle globally for Navbar button
-  React.useEffect(() => {
-    window.onSidebarToggle = () => setSidebarOpen(true);
-    return () => {
-      window.onSidebarToggle = undefined;
-    };
-  }, []);
+  // Sidebar toggle handler
+  const handleSidebarToggle = () => setSidebarOpen(true);
 
   return (
     <div className="min-h-screen">
@@ -28,7 +24,7 @@ const Layout = ({ children, showSidebar = false }) => {
         )}
 
         <div className="flex-1 flex flex-col">
-          <Navbar />
+          <Navbar onSidebarToggle={handleSidebarToggle} />
           <main className="flex-1 overflow-y-auto">{children}</main>
         </div>
       </div>
