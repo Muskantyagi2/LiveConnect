@@ -8,13 +8,14 @@ import {
   PencilLineIcon,
 } from "lucide-react";
 
-const Sidebar = () => {
+const Sidebar = ({ mobileOpen = false, onClose }) => {
   const { authUser } = useAuthUser();
   const location = useLocation();
   const currentPath = location.pathname;
 
-  return (
-    <aside className="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col h-screen sticky top-0">
+  // Sidebar content
+  const sidebarContent = (
+    <>
       <div className="p-5 border-b border-base-300">
         <Link to="/" className="flex items-center gap-2.5">
           <ShipWheelIcon className="size-9 text-primary" />
@@ -73,6 +74,46 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+    </>
+  );
+
+  // Desktop sidebar
+  if (!mobileOpen) {
+    return (
+      <aside className="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col h-screen sticky top-0">
+        {sidebarContent}
+      </aside>
+    );
+  }
+
+  // Mobile sidebar
+  return (
+    <aside
+      className="fixed inset-y-0 left-0 w-64 bg-base-200 border-r border-base-300 flex flex-col h-full z-50 transition-transform duration-300 transform translate-x-0 lg:hidden shadow-xl"
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Close button */}
+      <button
+        className="absolute top-4 right-4 btn btn-ghost btn-circle"
+        aria-label="Close sidebar"
+        onClick={onClose}
+      >
+        <svg
+          width="24"
+          height="24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-6 w-6"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      {sidebarContent}
     </aside>
   );
 };
